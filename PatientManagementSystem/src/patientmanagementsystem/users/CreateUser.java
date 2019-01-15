@@ -35,7 +35,7 @@ public class CreateUser extends User{
         
         //Formats the UserID Correctly.
         
-        String entireEntry = UserID + "," + Role + "," + name  + "," + surname  + "," +gender  + "," + age  + "," + address;
+        String entireEntry = UserID + "," + Role + "," + this.Name  + "," + this.Surname  + "," + this.Gender  + "," + this.Age  + "," + this.Address;
         
         //Saves Data to .txt File.
         try {
