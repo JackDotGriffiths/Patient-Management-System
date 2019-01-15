@@ -10,13 +10,13 @@ package patientmanagementsystem.users;
  * @author jack-
  */
 public class User {
-    private String UID = "UNKNOWN";
-    private String Role = "UNKNOWN";
-    private String Name = "UNKNOWN";
-    private String Surname = "UNKNOWN";
-    private String Gender = "UNKNOWN";
-    private Integer Age = 0;
-    private String Address = "UNKNOWN";
+    protected String UID = "UNKNOWN";
+    protected String Role = "UNKNOWN";
+    protected String Name = "UNKNOWN";
+    protected String Surname = "UNKNOWN";
+    protected String Gender = "UNKNOWN";
+    protected Integer Age = 0;
+    protected String Address = "UNKNOWN";
 
     public String getUID() {
         return UID;
