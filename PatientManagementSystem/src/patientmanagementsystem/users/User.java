@@ -15,8 +15,9 @@ public class User {
     protected String Name = "UNKNOWN";
     protected String Surname = "UNKNOWN";
     protected String Gender = "UNKNOWN";
-    protected Integer Age = 0;
+    protected String DoB = "UNKNOWN";
     protected String Address = "UNKNOWN";
+    protected String Password = "UNKNOWN";
 
     public String getUID() {
         return UID;
@@ -66,13 +67,13 @@ public class User {
         }
     }
 
-    public Integer getAge() {
-        return Age;
+    public String getDoB() {
+        return DoB;
     }
 
-    public void setAge(Integer Age) {
-        if(Age != null && Age > 0 && Age< 150){
-            this.Age = Age;
+    public void setDoB(String DoB) {
+        if(DoB != null && !DoB.isEmpty()){
+            this.DoB = DoB;
         }
     }
 
@@ -85,6 +86,15 @@ public class User {
            this.Address = Address; 
         }
     }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
+    }
+    
     
     
 }

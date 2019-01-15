@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,24 +19,24 @@ import java.text.DecimalFormat;
  */
 public class CreateUser extends User{
     
-    private String path = "E:\\Current Modules\\SOFT252-Object-Oriented-Programming\\PatientManagementSystem\\Patient-Management-System\\ProjectData\\Users.txt";
+    public String path = "Users.txt";
     private boolean append_to_file = true;
     
-    public CreateUser(String Role,String name,String surname,String gender,Integer age,String address){
+    public CreateUser(String Role,String name,String surname,String gender,String dob,String address,String password){
         this.Name = name;
         this.Surname = surname;
         this.Gender = gender;
-        this.Age = age;
+        this.DoB = dob;
         this.Address = address; 
+        this.Password = password;
+        
         
         //Retrieve UserID and Format Correctly.
         String UserIDNumber = GenerateUIN();
         String UserID = Role.charAt(0) + UserIDNumber;
         
-        
-        //Formats the UserID Correctly.
-        
-        String entireEntry = UserID + "," + Role + "," + this.Name  + "," + this.Surname  + "," + this.Gender  + "," + this.Age  + "," + this.Address;
+        //Formats the UserID Correctly.   
+        String entireEntry = UserID + "," + Role + "," + this.Name  + "," + this.Surname  + "," + this.Gender  + "," + this.DoB  + "," + this.Address + "," + this.Password;
         
         //Saves Data to .txt File.
         try {
@@ -44,6 +45,8 @@ public class CreateUser extends User{
         catch(IOException e){
             System.out.println(e.getMessage());
         }
+        
+        JOptionPane.showMessageDialog(null, "User Saved. User ID = " + UserID,"User Saved",JOptionPane.OK_CANCEL_OPTION);
     }
     public String GenerateUIN(){
         //Counts the amount of lines in the file, giving an UID for the new user.
@@ -69,7 +72,7 @@ public class CreateUser extends User{
         }
         else
         {
-            UIN = Role.charAt(0) + "0000";
+            UIN = "0000";
         }
         return UIN;
     }
