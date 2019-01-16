@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import patientmanagementsystem.users.CreateUser;
@@ -233,8 +234,8 @@ public class AddUser extends javax.swing.JFrame {
                 "UserID", "Role", "Name", "Surname", "Gender", "DoB", "Address", "Password"
             }
         ));
+        usersTable.setEnabled(false);
         usersTable.setName("usersTable"); // NOI18N
-        usersTable.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(usersTable);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -257,12 +258,13 @@ public class AddUser extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(384, 384, 384)
-                        .addComponent(jLabel9)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(loadtableButton)
@@ -333,7 +335,7 @@ public class AddUser extends javax.swing.JFrame {
         }
         else
         {
-            Address = addressnumberInput.getText() + "-" + addressLine1Input.getText() + "-" + postcodeInput.getText();
+            Address = addressnumberInput.getText() + "-" + addressLine1Input.getText() + "-" + "LINE2 = NULL" + "-" + postcodeInput.getText();
         }
         
         if(Name.isEmpty() || Surname.isEmpty() || Gender.isEmpty() || DateofBirth.isEmpty() || Address.isEmpty() || Password.isEmpty()){
@@ -407,14 +409,18 @@ public class AddUser extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) usersTable.getModel();
         
         model.setRowCount(0);
-
+        String line;
+        Integer linenumber = 1;
+        
+        usersTable.getTableHeader().setReorderingAllowed(false);
+        
+        
         try{
-            br = new BufferedReader(new FileReader("Users.txt"));
-
-            String line = br.readLine();
-            if(line != null){
+            br = new BufferedReader(new FileReader("Users.txt"));       
+            while((line = br.readLine()) != null){
                 String[] userFields = line.split(",");
                 model.addRow(new Object[]{userFields[0],userFields[1],userFields[2],userFields[3],userFields[4],userFields[5],userFields[6],userFields[7]});
+                linenumber++;
             }
 
             br.close();

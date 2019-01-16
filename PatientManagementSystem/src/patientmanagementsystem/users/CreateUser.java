@@ -5,6 +5,9 @@
  */
 package patientmanagementsystem.users;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -32,7 +35,9 @@ public class CreateUser extends User{
         
         
         //Retrieve UserID and Format Correctly.
-        String UserIDNumber = GenerateUIN();
+        String UserIDNumber = "UNKNOWN";
+        UserIDNumber = GenerateUIN();
+       
         String UserID = Role.charAt(0) + UserIDNumber;
         
         //Formats the UserID Correctly.   
@@ -52,23 +57,36 @@ public class CreateUser extends User{
         //Counts the amount of lines in the file, giving an UID for the new user.
         long amount = 0;
         String UIN ="";
+        Integer previoususerID = 0;
+        BufferedReader br;
+        Integer linenumber = 1;
+        String last = "", line = "";
         
         try{
-            amount = Files.lines(Paths.get(path)).count();
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
+            br = new BufferedReader(new FileReader("Users.txt"));       
+            while((line = br.readLine()) != null){
+                last = line;
+                linenumber++;
+            }
+
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
         }
         
         
-        if (amount > 0){
-            System.out.println(amount);
-            
+        if (!last.isEmpty()){
+            System.out.println(last);
+            String[] lastuserFields = last.split(",");
+            previoususerID = Integer.valueOf(lastuserFields[0].substring(1,5));
+            amount = previoususerID + 1;
+        }
+        
+        
+        
+        if (amount > 0){          
             DecimalFormat df = new DecimalFormat("0000");
-            
-            UIN = df.format(amount);
-            
-            
+            UIN = df.format(amount);   
         }
         else
         {

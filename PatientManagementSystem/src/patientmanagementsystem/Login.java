@@ -5,6 +5,12 @@
  */
 package patientmanagementsystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jack-
@@ -50,7 +56,7 @@ public class Login extends javax.swing.JFrame {
         passwordloginInput.setName("passwordInput"); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Patient/Doctor Management");
+        jLabel10.setText("Patient Management System");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setText("Login");
@@ -61,6 +67,7 @@ public class Login extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setText("UserID");
 
+        loginButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,9 +86,6 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -96,15 +100,18 @@ public class Login extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(passwordloginInput, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(useridloginInput, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))))))
+                                    .addComponent(jLabel11)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel10)))))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel10)
-                .addGap(60, 60, 60)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel11)
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -118,7 +125,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logintooltipLabel)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,6 +147,42 @@ public class Login extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         String inputID = useridloginInput.getText();
+        String inputPassword = passwordloginInput.getText();
+        
+        if(inputID.isEmpty() || inputPassword.isEmpty()){
+            logintooltipLabel.setText("Please input into all fields");
+            return;
+        }
+        
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        String LoggedInUser;
+        Boolean LoggedIn = false;
+        Integer linenumber = 1;
+ 
+        try{
+            br = new BufferedReader(new FileReader("Users.txt"));       
+            while((line = br.readLine()) != null){
+                userFields = line.split(",");
+                linenumber++;
+            }
+
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        if (LoggedIn = true){
+            
+        }else
+        {
+            logintooltipLabel.setText("Incorrect UniqueID or Password input.");
+            return;
+        }
+        
+        
+        
         
     }//GEN-LAST:event_loginButtonActionPerformed
 

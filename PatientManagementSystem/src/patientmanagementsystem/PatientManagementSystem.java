@@ -19,7 +19,7 @@ public class PatientManagementSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {     
-        AddUser form = new AddUser();
+        Login form = new Login();
         form.setVisible(true);
     }
     
