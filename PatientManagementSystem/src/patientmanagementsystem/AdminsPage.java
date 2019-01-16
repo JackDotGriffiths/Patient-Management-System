@@ -29,6 +29,7 @@ public class AdminsPage extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        manageusersButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1024, 720));
@@ -43,6 +44,13 @@ public class AdminsPage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Administrator Page");
 
+        manageusersButton.setText("Manage Users");
+        manageusersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageusersButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -50,9 +58,11 @@ public class AdminsPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(233, 233, 233)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addGap(190, 190, 190)
+                .addComponent(manageusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -60,8 +70,9 @@ public class AdminsPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(428, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(manageusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
 
         pack();
@@ -73,6 +84,13 @@ public class AdminsPage extends javax.swing.JFrame {
         form.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void manageusersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageusersButtonActionPerformed
+        // TODO add your handling code here:
+        AddUser form = new AddUser();
+        form.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_manageusersButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,5 +130,6 @@ public class AdminsPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton manageusersButton;
     // End of variables declaration//GEN-END:variables
 }
