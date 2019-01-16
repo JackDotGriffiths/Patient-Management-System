@@ -5,6 +5,18 @@
  */
 package patientmanagementsystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jack-
@@ -30,6 +42,12 @@ public class AdminsPage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         manageusersButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        viewratingCombo = new javax.swing.JComboBox<>();
+        ratingLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        feedbackTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1024, 720));
@@ -51,17 +69,84 @@ public class AdminsPage extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("View Doctor Feedback");
+
+        viewratingCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Click to Load Doctors]" }));
+        viewratingCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewratingComboActionPerformed(evt);
+            }
+        });
+
+        ratingLabel.setForeground(new java.awt.Color(255, 51, 51));
+        ratingLabel.setText("AVG: ");
+
+        feedbackTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Score", "Notes"
+            }
+        ));
+        jScrollPane1.setViewportView(feedbackTable);
+        if (feedbackTable.getColumnModel().getColumnCount() > 0) {
+            feedbackTable.getColumnModel().getColumn(0).setMinWidth(20);
+            feedbackTable.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ratingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ratingLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(190, 190, 190)
-                .addComponent(manageusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(155, 155, 155)
+                        .addComponent(manageusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -72,7 +157,9 @@ public class AdminsPage extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jLabel1)
                     .addComponent(manageusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(196, 196, 196))
         );
 
         pack();
@@ -91,6 +178,46 @@ public class AdminsPage extends javax.swing.JFrame {
         form.setVisible(true);
         dispose();
     }//GEN-LAST:event_manageusersButtonActionPerformed
+
+    private void viewratingComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewratingComboActionPerformed
+        // TODO add your handling code here:
+
+        if(viewratingCombo.getSelectedItem()== "[Click to Load Doctors]"){
+            //Populate the ComboBox if it isn't already
+            JComboBox box = viewratingCombo;
+
+            List<String> ListOfDoctors = new ArrayList<String>();
+            try{
+                ListOfDoctors = ListDoctor();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+
+            box.removeAllItems();
+            String newlist = "UNKNOWN";
+
+            for(int i=0; i<ListOfDoctors.size();i++){
+                box.addItem(ListOfDoctors.get(i));
+            }
+            String doctorInput = viewratingCombo.getSelectedItem().toString();
+            String[] doctorInputFields = doctorInput.split("-");
+            String chosendoctorID = doctorInputFields[1];
+
+            float Rating = CalculateAverageandPopulateTable(chosendoctorID);
+
+            ratingLabel.setText("AVG: " + Rating + "/5");
+        }
+        else{
+            String doctorInput = viewratingCombo.getSelectedItem().toString();
+            String[] doctorInputFields = doctorInput.split("-");
+            String chosendoctorID = doctorInputFields[1];
+
+            float Rating = CalculateAverageandPopulateTable(chosendoctorID);
+
+            ratingLabel.setText("AVG: " + Rating + "/5");
+
+        }
+    }//GEN-LAST:event_viewratingComboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,10 +253,93 @@ public class AdminsPage extends javax.swing.JFrame {
             }
         });
     }
+    
+    public List<String> ListDoctor() throws IOException{
+    
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        String LoggedInUser;
+        Boolean LoggedIn = false;
+        Integer linenumber = 1;
+
+        br = new BufferedReader(new FileReader("Users.txt"));
+        List<String> list = new ArrayList<String>();
+        while((line = br.readLine()) != null){
+            userFields = line.split(",");
+            if (userFields[1].equals("Doctor")){
+                list.add(userFields[2] + " " + userFields[3] + "-" + userFields[0]);
+            }
+            linenumber++;
+        }
+        return list;
+    }
+    public Float CalculateAverageandPopulateTable(String DoctorID){
+        DefaultTableModel model = (DefaultTableModel) feedbackTable.getModel();
+        //Search through feedback
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        Integer linenumber = 1;
+        float FeedbackTotal = 0;
+        float FeedbackCount = 0;
+        
+        model.setRowCount(0);
+
+        try{
+            br = new BufferedReader(new FileReader("Feedback.txt"));
+            while((line = br.readLine()) != null){
+                userFields = line.split(",");
+                //Any that match DoctorNo. to Selected DoctorID - > Take rating and add to total -> Add a count
+                if (userFields[1].equals(DoctorID)){
+                    if (userFields.length == 4){
+                        model.addRow(new Object[]{userFields[2],userFields[3]});
+                    }
+                    else{
+                        model.addRow(new Object[]{userFields[2],"No Notes Given"});
+                    }
+                    FeedbackCount = FeedbackCount + 1;
+                    FeedbackTotal = FeedbackTotal + parseInt(userFields[2]);
+                }
+                linenumber++;
+            }
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        
+        //Divide total rating by count of ratings to output an average.
+        Double average = 0.0;
+        Float averageOutput = 0.0f;
+        Float averageUnformatted = 0.0f;
+        
+        averageUnformatted = FeedbackTotal/FeedbackCount;
+        //need formatting to 2dp.p
+        average = round(averageUnformatted,2); 
+        averageOutput = average.floatValue();
+        
+        
+        
+        return (averageOutput);
+    }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd;
+        bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable feedbackTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton manageusersButton;
+    private javax.swing.JLabel ratingLabel;
+    private javax.swing.JComboBox<String> viewratingCombo;
     // End of variables declaration//GEN-END:variables
 }

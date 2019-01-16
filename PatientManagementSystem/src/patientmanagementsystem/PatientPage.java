@@ -139,7 +139,7 @@ public class PatientPage extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(22, 22, 22)
+                                .addGap(27, 27, 27)
                                 .addComponent(jLabel4)))))
                 .addContainerGap())
         );
