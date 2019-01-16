@@ -41,7 +41,7 @@ public class Login extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
         logintooltipLabel = new javax.swing.JLabel();
-        loginButton1 = new javax.swing.JButton();
+        patientRequest = new javax.swing.JButton();
         passwordloginInput = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,11 +78,11 @@ public class Login extends javax.swing.JFrame {
         logintooltipLabel.setToolTipText("");
         logintooltipLabel.setName("tooltipLabel"); // NOI18N
 
-        loginButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        loginButton1.setText("Patient Account Request");
-        loginButton1.addActionListener(new java.awt.event.ActionListener() {
+        patientRequest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        patientRequest.setText("Patient Account Request");
+        patientRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButton1ActionPerformed(evt);
+                patientRequestActionPerformed(evt);
             }
         });
 
@@ -117,7 +117,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(loginButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patientRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
         jPanel3Layout.setVerticalGroup(
@@ -139,8 +139,8 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logintooltipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(loginButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(patientRequest)
                 .addContainerGap())
         );
 
@@ -149,24 +149,24 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
+    private void patientRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientRequestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loginButton1ActionPerformed
+        //Navigate to PatientAccountRequest Form.
+        PatientAccountRequest form = new PatientAccountRequest();
+        form.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_patientRequestActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
@@ -277,9 +277,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton loginButton;
-    private javax.swing.JButton loginButton1;
     private javax.swing.JLabel logintooltipLabel;
     private javax.swing.JPasswordField passwordloginInput;
+    private javax.swing.JButton patientRequest;
     private javax.swing.JTextField useridloginInput;
     // End of variables declaration//GEN-END:variables
 }

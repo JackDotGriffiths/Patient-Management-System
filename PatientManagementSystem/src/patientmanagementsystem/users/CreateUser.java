@@ -63,7 +63,7 @@ public class CreateUser extends User{
         String last = "", line = "";
         
         try{
-            br = new BufferedReader(new FileReader("Users.txt"));       
+            br = new BufferedReader(new FileReader(path));       
             while((line = br.readLine()) != null){
                 last = line;
                 linenumber++;
