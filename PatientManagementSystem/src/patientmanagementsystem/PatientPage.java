@@ -5,8 +5,15 @@
  */
 package patientmanagementsystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -43,7 +50,7 @@ public class PatientPage extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        viewratingCombo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1024, 720));
@@ -72,6 +79,13 @@ public class PatientPage extends javax.swing.JFrame {
         ratingValue.setToolTipText("");
         ratingValue.setValue(3);
 
+        doctorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Click to Load Doctors]" }));
+        doctorComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doctorComboBoxActionPerformed(evt);
+            }
+        });
+
         feedbackText.setColumns(20);
         feedbackText.setRows(5);
         jScrollPane1.setViewportView(feedbackText);
@@ -92,10 +106,8 @@ public class PatientPage extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ratingValue, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -123,11 +135,11 @@ public class PatientPage extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(ratingValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -137,7 +149,12 @@ public class PatientPage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("View Doctor Rating");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        viewratingCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Click to Load Doctors]" }));
+        viewratingCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewratingComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -147,7 +164,7 @@ public class PatientPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -156,7 +173,7 @@ public class PatientPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -203,6 +220,46 @@ public class PatientPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void doctorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorComboBoxActionPerformed
+        // TODO add your handling code here:
+        JComboBox box = doctorComboBox;
+        
+        List<String> ListOfDoctors = new ArrayList<String>();
+        try{
+            ListOfDoctors = ListDoctor();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        box.removeAllItems();
+        String newlist = "UNKNOWN";
+        
+        for(int i=0; i<ListOfDoctors.size();i++){
+            box.addItem(ListOfDoctors.get(i));
+        }
+        
+        
+    }//GEN-LAST:event_doctorComboBoxActionPerformed
+
+    private void viewratingComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewratingComboActionPerformed
+        // TODO add your handling code here:
+         JComboBox box = viewratingCombo;
+        
+        List<String> ListOfDoctors = new ArrayList<String>();
+        try{
+            ListOfDoctors = ListDoctor();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        box.removeAllItems();
+        String newlist = "UNKNOWN";
+        
+        for(int i=0; i<ListOfDoctors.size();i++){
+            box.addItem(ListOfDoctors.get(i));
+        }
+    }//GEN-LAST:event_viewratingComboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -238,11 +295,25 @@ public class PatientPage extends javax.swing.JFrame {
         });
     }
     
-    public ArrayList[] ListDoctors(){
+    public List<String> ListDoctor() throws IOException{
+    
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        String LoggedInUser;
+        Boolean LoggedIn = false;
+        Integer linenumber = 1;
+
+        br = new BufferedReader(new FileReader("Users.txt"));
         List<String> list = new ArrayList<String>();
-        
-        
-        return Doctors;
+        while((line = br.readLine()) != null){
+            userFields = line.split(",");
+            if (userFields[1].equals("Doctor")){
+                list.add(userFields[2] + " " + userFields[3]);
+            }
+            linenumber++;
+        }
+        return list;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -250,7 +321,6 @@ public class PatientPage extends javax.swing.JFrame {
     private javax.swing.JTextArea feedbackText;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -260,5 +330,6 @@ public class PatientPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider ratingValue;
+    private javax.swing.JComboBox<String> viewratingCombo;
     // End of variables declaration//GEN-END:variables
 }

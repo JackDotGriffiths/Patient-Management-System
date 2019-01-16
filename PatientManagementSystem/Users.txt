@@ -5,3 +5,4 @@ P0003,Patient,TEst,Test,Male,19/04/15,TEst---Tes,Test
 S0004,Secretary,Test,Secretary,Male,15/08/96,Test-test-test-Test,test
 P0005,Patient,test,test,Male,19/12/12,test---LI7 89A,test
 P0006,Patient,Jack,Griffiths,Male,16/06/19,89-Monitor Drive--LI7 89A,testRequest
+D0007,Doctor,DrTest,Man,Male,23/02/87,DrTestRd--DrTest-DrTest,test
