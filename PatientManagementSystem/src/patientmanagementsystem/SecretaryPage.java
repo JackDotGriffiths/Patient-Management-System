@@ -140,7 +140,7 @@ public class SecretaryPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(accountrequeststootltipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(useridtoapproveText, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+                            .addComponent(useridtoapproveText, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(approveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,7 +180,7 @@ public class SecretaryPage extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(183, 183, 183)
                         .addComponent(jLabel1)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,8 +190,8 @@ public class SecretaryPage extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         pack();
