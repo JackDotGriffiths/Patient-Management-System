@@ -8,6 +8,10 @@ package patientmanagementsystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -53,6 +57,7 @@ public class PatientPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         viewratingCombo = new javax.swing.JComboBox<>();
+        ratingLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1024, 720));
@@ -172,6 +177,9 @@ public class PatientPage extends javax.swing.JFrame {
             }
         });
 
+        ratingLabel.setForeground(new java.awt.Color(255, 51, 51));
+        ratingLabel.setText("AVG: ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -180,8 +188,10 @@ public class PatientPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ratingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +199,8 @@ public class PatientPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewratingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ratingLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -223,7 +234,7 @@ public class PatientPage extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
@@ -259,20 +270,41 @@ public class PatientPage extends javax.swing.JFrame {
 
     private void viewratingComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewratingComboActionPerformed
         // TODO add your handling code here:
-         JComboBox box = viewratingCombo;
         
-        List<String> ListOfDoctors = new ArrayList<String>();
-        try{
-            ListOfDoctors = ListDoctor();
-        }catch(IOException e){
-            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        if(viewratingCombo.getSelectedItem()== "[Click to Load Doctors]"){
+            //Populate the ComboBox if it isn't already
+            JComboBox box = viewratingCombo;
+        
+            List<String> ListOfDoctors = new ArrayList<String>();
+            try{
+                ListOfDoctors = ListDoctor();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+        
+            box.removeAllItems();
+            String newlist = "UNKNOWN";
+        
+            for(int i=0; i<ListOfDoctors.size();i++){
+                box.addItem(ListOfDoctors.get(i));
+            }
+            String doctorInput = viewratingCombo.getSelectedItem().toString();
+            String[] doctorInputFields = doctorInput.split("-");
+            String chosendoctorID = doctorInputFields[1];
+            
+            float Rating = CalculateAverage(chosendoctorID);
+            
+            ratingLabel.setText("AVG: " + Rating + "/5");
         }
-        
-        box.removeAllItems();
-        String newlist = "UNKNOWN";
-        
-        for(int i=0; i<ListOfDoctors.size();i++){
-            box.addItem(ListOfDoctors.get(i));
+        else{
+            String doctorInput = viewratingCombo.getSelectedItem().toString();
+            String[] doctorInputFields = doctorInput.split("-");
+            String chosendoctorID = doctorInputFields[1];
+            
+            float Rating = CalculateAverage(chosendoctorID);
+            
+            ratingLabel.setText("AVG: " + Rating + "/5");
+               
         }
     }//GEN-LAST:event_viewratingComboActionPerformed
 
@@ -337,8 +369,7 @@ public class PatientPage extends javax.swing.JFrame {
                 new PatientPage().setVisible(true);
             }
         });
-    }
-    
+    } 
     public List<String> ListDoctor() throws IOException{
     
         BufferedReader br;
@@ -359,6 +390,54 @@ public class PatientPage extends javax.swing.JFrame {
         }
         return list;
     }
+    public Float CalculateAverage(String DoctorID){
+        //Search through feedback
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        Integer linenumber = 1;
+        float FeedbackTotal = 0;
+        float FeedbackCount = 0;
+
+        try{
+            br = new BufferedReader(new FileReader("Feedback.txt"));
+            while((line = br.readLine()) != null){
+                userFields = line.split(",");
+                //Any that match DoctorNo. to Selected DoctorID - > Take rating and add to total -> Add a count
+                if (userFields[1].equals(DoctorID)){
+                    FeedbackCount = FeedbackCount + 1;
+                    FeedbackTotal = FeedbackTotal + parseInt(userFields[2]);
+                }
+                linenumber++;
+            }
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        
+        //Divide total rating by count of ratings to output an average.
+        Double average = 0.0;
+        Float averageOutput = 0.0f;
+        Float averageUnformatted = 0.0f;
+        
+        averageUnformatted = FeedbackTotal/FeedbackCount;
+        //need formatting to 2dp.p
+        average = round(averageUnformatted,2); 
+        averageOutput = average.floatValue();
+        
+        
+        
+        return (averageOutput);
+    }
+    
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd;
+        bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> doctorComboBox;
@@ -373,6 +452,7 @@ public class PatientPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel ratingLabel;
     private javax.swing.JSlider ratingValue;
     private javax.swing.JButton submitfeedbackButton;
     private javax.swing.JComboBox<String> viewratingCombo;
