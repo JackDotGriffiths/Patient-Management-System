@@ -212,6 +212,63 @@ public class SecretaryPage extends javax.swing.JFrame {
     private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyButtonActionPerformed
         // Deny Button needs to search for the line that matches the input number and delete that line from the text file.
         
+        // Approve Button needs to search for the string in PatientRequests.txt that matches the input ID. Then CreateUser with that data.
+        String inputID = useridtoapproveText.getText();
+        if(inputID.isEmpty()){
+            accountrequeststootltipLabel.setText("Please enter a UserID");
+            return;
+        }
+        String ID = "UNKNOWN";
+        String name = "UNKNOWN";
+        String surname = "UNKNOWN";
+        String gender = "UNKNOWN";
+        String dob = "UNKNOWN";
+        String address = "UNKNOWN";
+        String password = "UNKNOWN";
+        
+        //Search through PatientAccountsRequests.txt for this inputID and set all the relevant variables.
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        Integer linenumber = 1;
+        Integer resultlinenumber = 0;
+        
+        try{
+            br = new BufferedReader(new FileReader("PatientAccountsRequests.txt"));
+            while((line = br.readLine()) != null){
+                userFields = line.split(",");
+                if (userFields[0].equals(inputID)){
+                    resultlinenumber = linenumber;
+                    ID = userFields[0];
+                    name = userFields[2];
+                    surname = userFields[3];
+                    gender = userFields[4];
+                    dob = userFields[5];
+                    address = userFields[6];
+                    password = userFields[7];           
+                }
+                linenumber++;
+            }
+
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+         
+        System.out.println("Deleting tempRecord.");
+        
+        String deleteText = ID + ",Patient," + name + "," + surname + "," + gender + "," + dob + "," + address + "," + password;
+        
+        File f = new File("PatientAccountsRequests.txt");
+        try {
+            //Delete the found record from the .txt file.
+            br = new BufferedReader(new FileReader("PatientAccountsRequests.txt"));
+            removeLine(br,f,deleteText);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        PopulateRequestsTable();
+        
     }//GEN-LAST:event_denyButtonActionPerformed
 
     private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
