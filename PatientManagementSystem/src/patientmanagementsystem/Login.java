@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Login extends javax.swing.JFrame {
 
-    private String UserID;
+    public static String UserID;
     public static String LoginName;
     
     public String getUsername(){

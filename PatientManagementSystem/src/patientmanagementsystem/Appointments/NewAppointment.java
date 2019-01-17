@@ -30,7 +30,14 @@ public class NewAppointment extends Appointment{
         this.DateofAppointment = dateofAppointment;
         this.Notes = notes;
         
-    
+        String Entry = this.AppointmentID + "," + this.State + "," + this.DoctorID + "," + this.PatientID + "," + this.DateofAppointment + "," + this.Notes;
+        
+        try {
+                SaveToFile(Entry);
+            }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
         
         
     } 

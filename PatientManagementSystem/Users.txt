@@ -1,3 +1,4 @@
 A0000,Administrator,Adam,Blything,Male,05/10/97,67-PowercutLane--WRP L43,test
 P0001,Patient,Test,Patient,Male,16/09/12,TestRoad-Test-TestLane-TESTING,test
 D0002,Doctor,Test,Doctor,Male,14/05/87,TestingDoctor-TestRoad-TestLane-TestPostcode,test
+S0003,Secretary,Test,Secretary,Female,15/03/16,TESTCRETARY-TESTCRETARY-TESTCRETARY-TESTCRETARY,test
