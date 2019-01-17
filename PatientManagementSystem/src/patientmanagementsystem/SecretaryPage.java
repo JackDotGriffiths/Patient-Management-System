@@ -59,14 +59,13 @@ public class SecretaryPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         doctorSchedule = new javax.swing.JTable();
-        loadrequestsButton1 = new javax.swing.JButton();
-        denyButton1 = new javax.swing.JButton();
         patientapprovalLabel1 = new javax.swing.JLabel();
         approveButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        useridtoapproveText1 = new javax.swing.JTextField();
+        appointmentidInput = new javax.swing.JTextField();
         accountrequeststootltipLabel1 = new javax.swing.JLabel();
         awaitingapprovalCombo = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         loginnameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -170,7 +169,7 @@ public class SecretaryPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(accountrequeststootltipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(useridtoapproveText, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                            .addComponent(useridtoapproveText, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(approveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,22 +213,8 @@ public class SecretaryPage extends javax.swing.JFrame {
         doctorSchedule.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(doctorSchedule);
 
-        loadrequestsButton1.setText("Load Table");
-        loadrequestsButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadrequestsButton1ActionPerformed(evt);
-            }
-        });
-
-        denyButton1.setText("DENY");
-        denyButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                denyButton1ActionPerformed(evt);
-            }
-        });
-
         patientapprovalLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        patientapprovalLabel1.setText("User ID : ");
+        patientapprovalLabel1.setText("Appointment ID (X-Number):");
 
         approveButton1.setText("APPROVE");
         approveButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +226,7 @@ public class SecretaryPage extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Pending Appointment Requests");
 
-        useridtoapproveText1.setToolTipText("Enter the UserID of the User you want to Approve/Deny");
+        appointmentidInput.setToolTipText("Enter the UserID of the User you want to Approve/Deny");
 
         accountrequeststootltipLabel1.setForeground(new java.awt.Color(255, 0, 0));
         accountrequeststootltipLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -253,6 +238,9 @@ public class SecretaryPage extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Doctor Schedule");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -261,51 +249,49 @@ public class SecretaryPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(64, 64, 64)
-                        .addComponent(accountrequeststootltipLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 3, Short.MAX_VALUE)
+                        .addComponent(accountrequeststootltipLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(241, 241, 241))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(patientapprovalLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(useridtoapproveText1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(approveButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(denyButton1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(118, 118, 118)
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(awaitingapprovalCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(loadrequestsButton1)
+                        .addGap(3, 3, 3)
+                        .addComponent(patientapprovalLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(awaitingapprovalCombo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(appointmentidInput)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(approveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loadrequestsButton1)
-                    .addComponent(jLabel4))
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(awaitingapprovalCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(awaitingapprovalCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(accountrequeststootltipLabel1)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(patientapprovalLabel1)
-                    .addComponent(useridtoapproveText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approveButton1)
-                    .addComponent(denyButton1))
-                .addContainerGap())
+                    .addComponent(appointmentidInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(approveButton1))
+                .addGap(8, 8, 8))
         );
 
         loginnameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -320,17 +306,17 @@ public class SecretaryPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(201, 201, 201)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(loginnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))))
+                        .addGap(23, 23, 23))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,10 +328,10 @@ public class SecretaryPage extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addComponent(loginnameLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -497,16 +483,31 @@ public class SecretaryPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_approveButtonActionPerformed
 
-    private void loadrequestsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadrequestsButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loadrequestsButton1ActionPerformed
-
-    private void denyButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_denyButton1ActionPerformed
-
     private void approveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButton1ActionPerformed
         // TODO add your handling code here:
+        String SearchID = appointmentidInput.getText();
+        Boolean foundRecord = false;
+        BufferedReader br;
+        String line;
+        String[] appointmentFields;
+        Integer linenumber = 1;
+            
+            awaitingapprovalCombo.removeAllItems();
+            try{
+                br = new BufferedReader(new FileReader("Appointments.txt"));
+                while((line = br.readLine()) != null){
+                appointmentFields = line.split(",");
+                if (appointmentFields[].equals(SearchID)){
+                    
+                }
+                linenumber++;
+            }
+
+            br.close();
+            }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+        
     }//GEN-LAST:event_approveButton1ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -518,36 +519,39 @@ public class SecretaryPage extends javax.swing.JFrame {
     private void awaitingapprovalComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_awaitingapprovalComboActionPerformed
         // TODO add your handling code here:
         
-        
-        BufferedReader br;
-        String line;
-        String[] appointmentFields;
-        String LoggedInUser;
-        Boolean LoggedIn = false;
-        Integer linenumber = 1;
-        awaitingapprovalCombo.removeAllItems();
-        try{
-            br = new BufferedReader(new FileReader("Appointments.txt"));
-            while((line = br.readLine()) != null){
+        if(awaitingapprovalCombo.getSelectedItem().toString() == "[Click to load pending Appointments]"){
+            BufferedReader br;
+            String line;
+            String[] appointmentFields;
+            Integer linenumber = 1;
+            awaitingapprovalCombo.removeAllItems();
+            try{
+                br = new BufferedReader(new FileReader("Appointments.txt"));
+                while((line = br.readLine()) != null){
                 appointmentFields = line.split(",");
                 if (appointmentFields[1].equals("Awaiting")){
                     String string = (appointmentFields[4]);
                     DateFormat format;
                     format = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
-                    Date appointmentDate = format.parse(string);
-                    
-                    
-                    awaitingapprovalCombo.addItem("");       
+                    Date appointmentDate = format.parse(string); 
+                    awaitingapprovalCombo.addItem(appointmentFields[0] + ":" + RetrieveUsersName(appointmentFields[3]) + " for " + RetrieveUsersName(appointmentFields[2]) + " -" + appointmentFields[2]+"- " + " on -" + appointmentDate);       
                 }
                 linenumber++;
             }
 
             br.close();
-        }catch(IOException e){
+            }catch(IOException e){
             JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
-        } catch (ParseException ex) {
+            } catch (ParseException ex) {
             Logger.getLogger(SecretaryPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        }else{
+            String[] SelectedItem = awaitingapprovalCombo.getSelectedItem().toString().split("-");
+            System.out.println(SelectedItem[1] + " " + SelectedItem[3]);
+            PopulateDoctorSchedule(SelectedItem[1],SelectedItem[3]);
+        }
+            
         
     }//GEN-LAST:event_awaitingapprovalComboActionPerformed
 
@@ -626,31 +630,84 @@ public class SecretaryPage extends javax.swing.JFrame {
         boolean b = temp.renameTo(f);
         
     }
+    public String RetrieveUsersName(String UserID){
+        
+        String UsersName = "";
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        Integer linenumber = 1;
+        
+        try{
+            br = new BufferedReader(new FileReader("Users.txt"));
+            while((line = br.readLine()) != null){
+                userFields = line.split(",");
+                if (userFields[0].equals(UserID)){
+                    UsersName = userFields[2] + " " + userFields[3];
+                }
+                linenumber++;
+            }
+
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        }
+        
+        return UsersName;
+    }
+    public void PopulateDoctorSchedule(String DoctorID,String Date){
+        
+        DefaultTableModel model = (DefaultTableModel) doctorSchedule.getModel();
+        model.setRowCount(0);
+        BufferedReader br;
+        String line;
+        String[] appointmentFields;
+        Integer linenumber = 1;
+        try{
+                br = new BufferedReader(new FileReader("Appointments.txt"));
+                while((line = br.readLine()) != null){
+                appointmentFields = line.split(",");
+                if (appointmentFields[1].equals("Approved")){
+                   if(appointmentFields[2].equals(DoctorID)){
+                       if(appointmentFields[4].equals(Date)){
+                           System.out.println("Matched Appointment");
+                           model.addRow(new Object[]{appointmentFields[2],appointmentFields[3],appointmentFields[4]});
+                       }
+                   }
+                }
+                linenumber++;
+            }
+
+            br.close();
+            }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountrequeststootltipLabel;
     private javax.swing.JLabel accountrequeststootltipLabel1;
+    private javax.swing.JTextField appointmentidInput;
     private javax.swing.JButton approveButton;
     private javax.swing.JButton approveButton1;
     private javax.swing.JComboBox<String> awaitingapprovalCombo;
     private javax.swing.JButton denyButton;
-    private javax.swing.JButton denyButton1;
     private javax.swing.JTable doctorSchedule;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loadrequestsButton;
-    private javax.swing.JButton loadrequestsButton1;
     private javax.swing.JLabel loginnameLabel;
     private javax.swing.JLabel patientapprovalLabel;
     private javax.swing.JLabel patientapprovalLabel1;
     private javax.swing.JTextField useridtoapproveText;
-    private javax.swing.JTextField useridtoapproveText1;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }
