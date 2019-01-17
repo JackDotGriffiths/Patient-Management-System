@@ -57,9 +57,9 @@ public class AddUser extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         passwordInput = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
-        dateInput = new javax.swing.JFormattedTextField();
         tooltipLabel = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        dateInput = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
@@ -127,13 +127,19 @@ public class AddUser extends javax.swing.JFrame {
             }
         });
 
-        dateInput.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-
         tooltipLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tooltipLabel.setForeground(new java.awt.Color(255, 0, 0));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("Add User");
+
+        dateInput.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        dateInput.setToolTipText("dd/mm/yy");
+        dateInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateInputActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -171,10 +177,10 @@ public class AddUser extends javax.swing.JFrame {
                             .addComponent(nameInput)
                             .addComponent(roleInput, 0, 194, Short.MAX_VALUE)
                             .addComponent(genderInput, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dateInput)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
-                                .addComponent(jLabel8)))))
+                                .addComponent(jLabel8))
+                            .addComponent(dateInput))))
                 .addGap(85, 85, 85))
         );
         jPanel2Layout.setVerticalGroup(
@@ -220,7 +226,7 @@ public class AddUser extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tooltipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tooltipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton)
                 .addContainerGap())
@@ -367,6 +373,10 @@ public class AddUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         PopulateTable();
     }//GEN-LAST:event_loadtableButtonActionPerformed
+
+    private void dateInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateInputActionPerformed
 
     /**
      * @param args the command line arguments

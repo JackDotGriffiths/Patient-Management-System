@@ -17,6 +17,24 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Login extends javax.swing.JFrame {
 
+    private String UserID;
+    public static String LoginName;
+    
+    public String getUsername(){
+        return UserID;
+    }
+    public void setUsername(String username){
+        this.UserID = username;
+    }
+
+    public String getLoginName() {
+        return LoginName;
+    }
+
+    public void setLoginName(String LoginName) {
+        this.LoginName = LoginName;
+    }
+    
     /**
      * Creates new form Login
      */
@@ -195,6 +213,7 @@ public class Login extends javax.swing.JFrame {
                     System.out.println("MATCH ID");
                     if(userFields[7].equals(inputPassword)){
                         System.out.println("MATCH PASSWORD");
+                        setLoginName(userFields [2] + " " + userFields[3]);
                         LoggedIn = true;
                     }
                 }
@@ -207,6 +226,7 @@ public class Login extends javax.swing.JFrame {
         }
 
         if (LoggedIn == true){
+            setUsername(inputID);
             Character roleLetter = inputID.charAt(0);
             switch (roleLetter){
                 case 'P':
