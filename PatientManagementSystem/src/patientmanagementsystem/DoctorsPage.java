@@ -8,6 +8,17 @@ package patientmanagementsystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +27,6 @@ import javax.swing.table.DefaultTableModel;
  * @author jack-
  */
 public class DoctorsPage extends javax.swing.JFrame {
-
     /**
      * Creates new form DoctorsPage
      */
@@ -38,15 +48,22 @@ public class DoctorsPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        appointmentsTable = new javax.swing.JTable();
+        loadSchedule = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        appointmentsTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        appointmentsTable = new javax.swing.JTable();
+        patientlistCombo = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        notesText = new javax.swing.JTextArea();
+        AppointmentIDInput = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         loginnameLabel1 = new javax.swing.JLabel();
 
         loginnameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -76,14 +93,14 @@ public class DoctorsPage extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("View Appointments");
 
-        jButton2.setText("Load Appointments");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        loadSchedule.setText("Load Appointments");
+        loadSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                loadScheduleActionPerformed(evt);
             }
         });
 
-        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
+        appointmentsTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -94,7 +111,11 @@ public class DoctorsPage extends javax.swing.JFrame {
                 "AppointmentID", "Patient", "Date", "Notes"
             }
         ));
-        jScrollPane1.setViewportView(appointmentsTable);
+        jScrollPane2.setViewportView(appointmentsTable1);
+        if (appointmentsTable1.getColumnModel().getColumnCount() > 0) {
+            appointmentsTable1.getColumnModel().getColumn(0).setHeaderValue("AppointmentI");
+            appointmentsTable1.getColumnModel().getColumn(1).setHeaderValue("Patient");
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,18 +124,17 @@ public class DoctorsPage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(134, 134, 134)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(115, 115, 115)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(110, 110, 110)
+                        .addComponent(loadSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,16 +142,39 @@ public class DoctorsPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(120, 120, 120))
+                .addComponent(loadSchedule)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(41, 41, 41)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(39, Short.MAX_VALUE)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Patient History");
+
+        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Date", "Notes"
+            }
+        ));
+        jScrollPane1.setViewportView(appointmentsTable);
+
+        patientlistCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Click to load Patients]" }));
+        patientlistCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientlistComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -141,34 +184,22 @@ public class DoctorsPage extends javax.swing.JFrame {
                 .addGap(136, 136, 136)
                 .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(patientlistCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setText("Make an Appointment");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(55, 55, 55))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(patientlistCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -176,21 +207,65 @@ public class DoctorsPage extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Consultation Notes");
 
+        notesText.setColumns(20);
+        notesText.setRows(5);
+        jScrollPane3.setViewportView(notesText);
+
+        jButton2.setText("Submit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("AppointmentID (X Value) :");
+
+        jLabel7.setText("Notes :");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jLabel4)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(AppointmentIDInput, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AppointmentIDInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(12, 12, 12))
         );
 
         loginnameLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -215,9 +290,7 @@ public class DoctorsPage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(95, 95, 95)
                         .addComponent(loginnameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -230,13 +303,10 @@ public class DoctorsPage extends javax.swing.JFrame {
                     .addComponent(loginnameLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -254,10 +324,10 @@ public class DoctorsPage extends javax.swing.JFrame {
         loginnameLabel1.setText(Login.LoginName);
     }//GEN-LAST:event_formWindowActivated
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void loadScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadScheduleActionPerformed
         // TODO add your handling code here:
         
-        DefaultTableModel model = (DefaultTableModel) appointmentsTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) appointmentsTable1.getModel();
         model.setRowCount(0);
         BufferedReader br;
         String line;
@@ -279,6 +349,87 @@ public class DoctorsPage extends javax.swing.JFrame {
             }catch(IOException e){
             JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
             }
+    }//GEN-LAST:event_loadScheduleActionPerformed
+
+    private void patientlistComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientlistComboActionPerformed
+        // TODO add your handling code here:
+        JComboBox box = patientlistCombo;
+        
+        if (patientlistCombo.getSelectedItem() == "[Click to load Patients]"){
+            List<String> ListOfPatients = new ArrayList<String>();
+            try{
+                ListOfPatients = ListPatient();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+            
+            box.removeAllItems();
+            String newlist = "UNKNOWN";
+        
+            for(int i=0; i<ListOfPatients.size();i++){
+            box.addItem(ListOfPatients.get(i));
+            }
+        }
+        else{
+            String[] string = patientlistCombo.getSelectedItem().toString().split("-");
+            String PatientID = string[1];
+            
+            PopulatePatientHistory(PatientID);
+        }
+            
+    }//GEN-LAST:event_patientlistComboActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String inputNotes = notesText.getText();
+        
+        if(inputNotes.isEmpty()){
+            return;
+        }
+        
+        
+        String SearchID = AppointmentIDInput.getText();
+        Boolean foundRecord = false;
+        BufferedReader br;
+        String line;
+        String[] appointmentFields;
+        Integer linenumber = 1;    
+        try{
+            br = new BufferedReader(new FileReader("Appointments.txt"));
+            while((line = br.readLine()) != null){
+                appointmentFields = line.split(",");
+                if (appointmentFields[0].equals(SearchID)){
+                    String newline = appointmentFields[0] +","+ appointmentFields[1]+ "," + appointmentFields[2] + "," + appointmentFields[3] + "," + appointmentFields[4]  + "," + inputNotes; 
+                    
+                    List<String> fileContent;
+                        fileContent = new ArrayList<>(Files.readAllLines(Paths.get("Appointments.txt")));
+                        for (int i = 0; i < fileContent.size(); i++) {
+                            if (fileContent.get(i).equals(line)) {
+                                fileContent.set(i, newline);
+                            break;
+                            }
+                        }
+                Files.write(Paths.get("Appointments.txt"), fileContent);
+                foundRecord = true;
+                }
+                linenumber++;
+            }
+
+            br.close();
+            }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            }
+        if(foundRecord == false){
+            JOptionPane.showMessageDialog(null, "Invalid ID Input","ERROR",JOptionPane.OK_CANCEL_OPTION);
+            
+        }
+        else if(foundRecord == true)
+        {
+            JOptionPane.showMessageDialog(null, "Comments Saved","Success",JOptionPane.OK_CANCEL_OPTION);
+            AppointmentIDInput.setText("");
+            notesText.setText("");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -340,23 +491,85 @@ public class DoctorsPage extends javax.swing.JFrame {
         
         return UsersName;
     }
+    public List<String> ListPatient() throws IOException{
+    
+        BufferedReader br;
+        String line;
+        String[] userFields;
+        String LoggedInUser;
+        Boolean LoggedIn = false;
+        Integer linenumber = 1;
+
+        br = new BufferedReader(new FileReader("Users.txt"));
+        List<String> list = new ArrayList<String>();
+        while((line = br.readLine()) != null){
+            userFields = line.split(",");
+            if (userFields[1].equals("Patient")){
+                list.add(userFields[2] + " " + userFields[3] + "-" + userFields[0]);
+            }
+            linenumber++;
+        }
+        return list;
+    }
+    public void PopulatePatientHistory(String patientID){
+        DefaultTableModel pastModel = (DefaultTableModel) appointmentsTable.getModel();
+        
+        pastModel.setRowCount(0);
+        BufferedReader br;
+        String line;
+        String[] appointmentFields;
+        Integer linenumber = 1;
+        DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+
+        try{
+            br = new BufferedReader(new FileReader("Appointments.txt"));
+            while((line = br.readLine()) != null){
+                appointmentFields = line.split(",");
+                if (appointmentFields[3].equals(patientID)){
+                    String string = (appointmentFields[4]);
+                    DateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
+                    Date appointmentDate = format.parse(string);
+                    if(appointmentDate.before(new Date())){
+                        //PREVIOUS APPOINTMENT
+                        pastModel.addRow(new Object[]{appointmentDate.toString(),appointmentFields[5]});
+                    }
+                }
+                linenumber++;
+            }
+
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, ex,"ERROR",JOptionPane.OK_CANCEL_OPTION);
+            Logger.getLogger(PatientPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AppointmentIDInput;
     private javax.swing.JTable appointmentsTable;
+    private javax.swing.JTable appointmentsTable1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton loadSchedule;
     private javax.swing.JLabel loginnameLabel;
     private javax.swing.JLabel loginnameLabel1;
+    private javax.swing.JTextArea notesText;
+    private javax.swing.JComboBox<String> patientlistCombo;
     // End of variables declaration//GEN-END:variables
 }
